@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Kavyashree</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #070412;
+            --accent-pink: #ff4d6d;
+            --light-pink: #ffb3c1;
+            --gold: #ffd166;
+            --card-purple: rgba(27, 18, 54, 0.55);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* --- STAGE 1: THE INTRO GIFT BOX --- */
+        .intro-stage {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, #1e123a 0%, #06040d 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .intro-stage.vanish {
+            transform: translateY(-100vh) scale(0.9);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gift-wrapper {
+            position: relative;
+            cursor: pointer;
+            font-size: 140px;
+            animation: giftFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 77, 109, 0.6));
+            transition: transform 0.3s;
+        }
+
+        .gift-wrapper:active {
+            transform: scale(0.8);
+        }
+
+        .tap-hint {
+            margin-top: 30px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: var(--light-pink);
+            text-shadow: 0 0 10px rgba(255, 77, 109, 0.4);
+            animation: pulseText 1.8s infinite;
+        }
+
+        /* --- STAGE 2: MAIN CINEMATIC WEB PAGE --- */
+        .main-web-stage {
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .main-web-stage.visible {
+            opacity: 1;
+        }
+
+        /* 📸 BACKGROUND SLIDER ENGINE */
+        .bg-slider-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.15);
+            transition: opacity 0.4s ease-in-out, transform 0.8s linear;
+        }
+
+        .bg-slide.active {
+            opacity: 0.35; 
+            transform: scale(1.03);
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(7, 4, 18, 0.5) 0%, rgba(11, 7, 30, 0.8) 50%, #070412 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-banner {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 40px;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-pink), var(--gold), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .bday-date-tag {
+            font-size: 18px;
+            color: var(--gold);
+            font-weight: 600;
+            border: 2px dashed var(--gold);
+            padding: 6px 22px;
+            border-radius: 30px;
+            background: rgba(7, 4, 18, 0.6);
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(255, 209, 102, 0.2);
+        }
+
+        .glowing-cake {
+            font-size: 90px;
+            filter: drop-shadow(0 0 20px rgba(255, 209, 102, 0.4));
+            animation: cakeBounce 2.5s ease-in-out infinite;
+        }
+
+        .scroll-down-arrow {
+            position: absolute;
+            bottom: 40px;
+            font-size: 14px;
+            color: var(--light-pink);
+            letter-spacing: 3px;
+            animation: arrowMover 1.5s infinite alternate;
+            font-weight: 600;
+        }
+
+        /* --- SCROLL CONTENT SECTION --- */
+        .content-scroll-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px 100px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reveal-card {
+            background: var(--card-purple);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px 20px;
+            margin-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .reveal-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .crush-photo-holder {
+            width: 220px;
+            height: 220px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
+            transition: transform 0.5s;
+        }
+
+        .reveal-card:hover .crush-photo-holder {
+            transform: scale(1.04) rotate(1deg);
+            border-color: var(--accent-pink);
+        }
+
+        .crush-photo-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-heading {
+            font-size: 22px;
+            color: var(--light-pink);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #d1cae8;
+        }
+
+        .final-wish-card {
+            background: linear-gradient(135deg, rgba(255, 77, 109, 0.15) 0%, rgba(27, 18, 54, 0.6) 100%);
+            border: 1px solid rgba(255, 77, 109, 0.25);
+        }
+
+        .romantic-wish-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 32px;
+            color: var(--gold);
+            line-height: 1.4;
+            margin-top: 10px;
+        }
+
+        /* --- UPWARD FLYING PARTICLES --- */
+        .confetti-piece {
+            position: fixed;
+            bottom: -50px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 999;
+            animation: flyUpAndVanish 4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        /* --- MUSIC FLOATING BUTTON --- */
+        .audio-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 77, 109, 0.25);
+            border: 1px solid var(--accent-pink);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(4deg); }
+        }
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(255,77,109,0.2)); }
+            100% { filter: drop-shadow(0 0 25px rgba(255,77,109,0.6)); }
+        }
+        @keyframes cakeBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.03); }
+        }
+        @keyframes arrowMover {
+            0% { transform: translateY(0); opacity: 0.4; }
+            100% { transform: translateY(10px); opacity: 1; }
+        }
+        @keyframes flyUpAndVanish {
+            0% { transform: translateY(0) scale(0.4) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-115vh) translateX(60px) scale(1.3) rotate(270deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="mySong" src="bg-song.mp3" loop></audio>
+    <button id="audioBtn" class="audio-control" onclick="toggleMusic()">🎵 Music: On</button>
+
+    <div id="introScreen" class="intro-stage">
+        <div class="gift-wrapper" onclick="triggerExplosion()">🎁</div>
+        <div class="tap-hint">TAP THE GIFT TO UNWRAP SURPRISE ✨</div>
+    </div>
+
+    <div id="mainWebsite" class="main-web-stage">
+        
+        <div id="bgSlider" class="bg-slider-container">
+            </div>
+        <div class="bg-overlay"></div>
+        
+        <section class="hero-banner">
+            <h1 class="main-title">Happy Birthday,<br>Kavyashree!</h1>
+            <div class="bday-date-tag">29 June 🎂</div>
+            <div class="glowing-cake">🎂</div>
+            <div class="scroll-down-arrow">SCROLL DOWN TO SEE MY HEART ↓</div>
+        </section>
+
+        <section class="content-scroll-section">
+
+            <div class="reveal-card">
+                <div class="crush-photo-holder">
+                    <img src="pic1.jpg" alt="Kavyashree Life">
+                </div>
+                <h3 class="card-heading">That Beautiful Smile ✨</h3>
+                <p class="card-text">
+                    Jab bhi tum muskurati ho, sach me aisa lagta hai jaise puri duniya ki raunak dugni ho gayi ho. Tumhari saadgi aur ye pyari si smile kisi ka bhi din khoobsurat banane ke liye kaafi hai.
+                </p>
+            </div>
+
+            <div class="reveal-card">
+                <div class="crush-photo-holder">
+                    <img src="pic2.jpg" alt="Kavyashree Traditional">
+                </div>
+                <h3 class="card-heading">Pure Grace & Elegance 🌸</h3>
+                <p class="card-text">
+                    Traditional look ho ya western, tumhari har ada mein ek alag hi grace hai. Tumhe dekhna aisa lagta hai jaise koi behad khoobsurat khwaab haqeeqat ban gaya ho.
+                </p>
+            </div>
+
+            <div class="reveal-card">
+                <div class="crush-photo-holder">
+                    <img src="pic3.jpg" alt="Kavyashree Cute">
+                </div>
+                <h3 class="card-heading">Unapologetically Cute 🥰</h3>
+                <p class="card-text">
+                    Tumhare har mood mein, har chhote se pout mein aur tumhari in gehri aankhon mein ek ajeeb sa jaadu hai, jo bina kuch kahe bhi bohot kuch bayaan kar jaata hai.
+                </p>
+            </div>
+
+            <div class="reveal-card final-wish-card">
+                <div class="crush-photo-holder" style="border-radius: 50%; width: 160px; height: 160px; border-color: var(--gold);">
+                    <img src="pic4.jpg" alt="Kavyashree Portrait">
+                </div>
+                <h3 class="card-heading" style="color: var(--gold);">My Heartfelt Wish For You ❤️</h3>
+                <p class="card-text">
+                    On this beautiful day, I just want to say how incredibly special you are. May your life be packed with endless laughter, sweet memories, and success at every step. May that bright smile of yours never fade away!
+                </p>
+                <p class="romantic-wish-text">
+                    Happy Birthday, My Dear Kavyashree! ✨
+                </p>
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        // 🛠️ CONFIGURATION: Background loop limit is set to 42!
+        const TOTAL_BACKGROUND_PHOTOS = 42; 
+
+        const song = document.getElementById('mySong');
+        const audioBtn = document.getElementById('audioBtn');
+        const bgSlider = document.getElementById('bgSlider');
+
+        // --- 1. BG PHOTO GENERATOR LOOP ---
+        function setupBackgroundSlider() {
+            for (let i = 1; i <= TOTAL_BACKGROUND_PHOTOS; i++) {
+                const slide = document.createElement('div');
+                slide.classList.add('bg-slide');
+                slide.style.backgroundImage = `url('bg${i}.jpg')`; 
+                if (i === 1) slide.classList.add('active');
+                bgSlider.appendChild(slide);
+            }
+        }
+
+        // --- 2. EXPLOSION & MUSIC RUNNER ---
+        function triggerExplosion() {
+            song.play().catch(err => console.log("Audio activated smoothly."));
+            audioBtn.style.display = "block";
+
+            generateUpwardBursts(40, ['🎈', '🎉', '⭐', '✨', '💖']);
+            
+            document.getElementById('introScreen').classList.add('vanish');
+            document.getElementById('mainWebsite').classList.add('visible');
+
+            startAmbientSlider();
+
+            setInterval(() => {
+                generateUpwardBursts(2, ['🎈', '🎉', '⭐', '✨', '💖']);
+            }, 350);
+        }
+
+        // --- 3. DYNAMIC BACKGROUND SLIDER CONTROLLER (Timing 0.8s) ---
+        function startAmbientSlider() {
+            const slides = document.querySelectorAll('.bg-slide');
+            let currentSlide = 0;
+            
+            if(slides.length <= 1) return;
+
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 800); // ⚡ Fixed exactly at 800ms (0.8 seconds)!
+        }
+
+        // --- 4. AUDIO TOGGLE ---
+        function toggleMusic() {
+            if (song.paused) {
+                song.play();
+                audioBtn.innerText = "🎵 Music: On";
+            } else {
+                song.pause();
+                audioBtn.innerText = "🔇 Music: Off";
+            }
+        }
+
+        // --- 5. SCROLL ENGINE FOR REVEAL CARDS ---
+        const cards = document.querySelectorAll('.reveal-card');
+        function checkScrollReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if(cardTop < triggerBottom) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkScrollReveal);
+
+        // --- 6. CINEMATIC UPWARD BURSTS ENGINE ---
+        function generateUpwardBursts(quantity, symbols) {
+            for (let i = 0; i < quantity; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('confetti-piece');
+                particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.fontSize = Math.random() * 20 + 16 + 'px';
+                particle.style.animationDelay = Math.random() * 0.4 + 's';
+                particle.style.animationDuration = Math.random() * 1.5 + 2.5 + 's'; 
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 4000);
+            }
+        }
+
+        // Initialize setup loops
+        setupBackgroundSlider();
+        checkScrollReveal();
+    </script>
+</body>
+</html>
